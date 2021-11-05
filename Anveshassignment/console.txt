@@ -1,0 +1,153 @@
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  output 1  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+---------- Welcome to Employee database -> Anvesh ----------
+Database is missing......!
+Enter a login name to register
+anvesh
+Enter your full name
+anvesh kunuguntla
+Enter your base salary
+89898
+Payroll Menu
+	1. Log In
+	2. Enter employees
+	3. List Employees
+	4. List employees
+	5. Terminate employees
+	6. Pay employees
+	0. Exit system
+Enter your choice
+1
+enter your login name
+anvesh
+Successfully logged in...
+hello anvesh kunuguntla
+Payroll Menu
+	1. Log In
+	2. Enter employees
+	3. List Employees
+	4. List employees
+	5. Terminate employees
+	6. Pay employees
+	0. Exit system
+Enter your choice
+2
+************************ new employee ****************************
+Enter the login name of the newEmployee
+ganesh
+Enter the Full name of the employee
+ganesh putta
+Enter the salary of the employee
+999999
+New employee created and added to data base
+00001	ganesh	999999.0	08/10/2021	ganesh putta
+Payroll Menu
+	1. Log In
+	2. Enter employees
+	3. List Employees
+	4. List employees
+	5. Terminate employees
+	6. Pay employees
+	0. Exit system
+Enter your choice
+2
+************************ new employee ****************************
+Enter the login name of the newEmployee
+vamshi
+Enter the Full name of the employee
+vamshi kunuguntla
+Enter the salary of the employee
+999999
+New employee created and added to data base
+00002	vamshi	999999.0	08/10/2021	vamshi kunuguntla
+Payroll Menu
+	1. Log In
+	2. Enter employees
+	3. List Employees
+	4. List employees
+	5. Terminate employees
+	6. Pay employees
+	0. Exit system
+Enter your choice
+0
+
+Process finished with exit code 0
+
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  output 2  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+---------- Welcome to Employee database -> Anvesh ----------
+Database is missing......!
+Enter a login name to register
+chandu
+Enter your full name
+chandu praneeth
+Enter your base salary
+89898
+Payroll Menu
+	1. Log In
+	2. Enter employees
+	3. List Employees
+	4. List employees
+	5. Terminate employees
+	6. Pay employees
+	0. Exit system
+Enter your choice
+1
+enter your login name
+chandu
+Successfully logged in...
+hello chandu praneeth
+Payroll Menu
+	1. Log In
+	2. Enter employees
+	3. List Employees
+	4. List employees
+	5. Terminate employees
+	6. Pay employees
+	0. Exit system
+Enter your choice
+2
+************************ new employee ****************************
+Enter the login name of the newEmployee
+krish
+Enter the Full name of the employee
+krishna kant
+Enter the salary of the employee
+9889
+New employee created and added to data base
+00001	krish	9889.0	08/10/2021	krishna kant
+Payroll Menu
+	1. Log In
+	2. Enter employees
+	3. List Employees
+	4. List employees
+	5. Terminate employees
+	6. Pay employees
+	0. Exit system
+Enter your choice
+2
+************************ new employee ****************************
+Enter the login name of the newEmployee
+dasta
+Enter the Full name of the employee
+dasta giri palla
+Enter the salary of the employee
+9899809
+New employee created and added to data base
+00002	dasta	9899809.0	08/10/2021	dasta giri palla
+Payroll Menu
+	1. Log In
+	2. Enter employees
+	3. List Employees
+	4. List employees
+	5. Terminate employees
+	6. Pay employees
+	0. Exit system
+Enter your choice
+0
+
+Process finished with exit code 0
