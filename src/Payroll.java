@@ -31,29 +31,21 @@ public class Payroll {
 //            creating and opening the file
             File myObj = new File("employee.txt");
             if (!myObj.createNewFile()) {
-                FileInputStream fs= new FileInputStream(myObj);
-                sc = new Scanner(myObj);
+                FileInputStream fs = new FileInputStream(myObj);
                 int count = 0;
-               /* while (sc.hasNext()) {
-//                    Reading from the file iof its already present
-                    String[] empdata = sc.nextLine().split("\t");
-                    Employee temp = new Hourly(empdata[1], Double.parseDouble(empdata[2]), empdata[4]);
-                    employees.add(temp);
-                    count++;
-                }*/
-                while (true){
-                    Employee emp=null;
+                while (true) {
+                    Employee emp = null;
                     try {
-
-                        ObjectInputStream objInput=new ObjectInputStream(fs);
-                        emp= (Employee) objInput.readObject();
+                        ObjectInputStream objInput = new ObjectInputStream(fs);
+                        emp = (Employee) objInput.readObject();
                         count++;
                         employees.add(emp);
-                    }
-                    catch (EOFException e){
+                    } catch (EOFException e) {
                         break;
                     }
                 }
+                System.out.println(count);
+                Employee.setNextID(count - 1);
                 if (count == 0) {
                     throw new FileNotFoundException();
                 }
@@ -93,16 +85,35 @@ public class Payroll {
         Employee firstEmployee = new Hourly(username, salary, name);
 
         FileOutputStream writer = new FileOutputStream("employee.txt", true);
-        ObjectOutputStream obj=new ObjectOutputStream(writer);
-//        BufferedWriter bf = new BufferedWriter(new OutputStreamWriter(writer));
-//        bf.write(String.valueOf(firstEmployee));
-//        bf.newLine();
-//        bf.close();
+        ObjectOutputStream obj = new ObjectOutputStream(writer);
         obj.writeObject(firstEmployee);
         obj.flush();
         writer.close();
         employees.add(firstEmployee);
         return firstEmployee;
+    }
+
+    private void updateFile() {
+        for(Employee emp:employees){
+            FileOutputStream writer= null;
+            ObjectOutputStream obj;
+            try {
+                writer = new FileOutputStream("employee.txt",false);
+                 obj= new ObjectOutputStream(writer);
+                obj.writeObject(emp);
+                obj.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                if (writer!=null){
+                    try {
+                        writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     //    Show menu function to show the use his choises
@@ -146,7 +157,7 @@ public class Payroll {
                         payEmployee();
                         break;
                     default:
-                        System.out.println("invalid option. Please choose one from below\n\n");
+                        System.out.println(ANSI_RED + "invalid option. Please choose one from below\n\n" + RESET);
                         break;
                 }
             } catch (InputMismatchException e) {
@@ -174,13 +185,15 @@ public class Payroll {
             } else {
                 if (employees.removeIf(employee -> employee.getEmpID() == id)) {
                     terminated.add(emp);
+                    updateFile();
                     System.out.println(GREEN + "Employee has been successfully terminated" + RESET);
                 }
             }
 
         } else {
             terminated.add(employees.remove(currentId));
-            System.out.println(YELLOW + "You have ben successully terminated" + RESET);
+            updateFile();
+            System.out.println(YELLOW + "You have been successully terminated" + RESET);
             currentUser = null;
             currentId = -1;
         }
@@ -194,7 +207,7 @@ public class Payroll {
             String name = anv.next();
             Employee emp = employees.stream().filter(employee -> employee.getUserName().equals(name)).findFirst().orElse(null);
             if (emp == null) {
-                System.out.println("Employee you are looking for is not in the database");
+                System.out.println(YELLOW + "Employee you are looking for is not in the database" + RESET);
             } else {
                 System.out.println("enter the new full name of the employee " + emp.getEmpName());
                 String fullname = anv.nextLine();
@@ -203,6 +216,7 @@ public class Payroll {
                 double salary = anv.nextDouble();
                 emp.setBaseSalary(salary);
                 emp.setEmpName(fullname);
+                updateFile();
                 System.out.println("Employee after updating the details \n " + emp);
             }
         }
@@ -233,7 +247,7 @@ public class Payroll {
         System.out.println("Enter the salary of the employee");
 //      Adding the employee to the database
         Employee emp = addToFile(anv, username, name);
-        System.out.println("New employee created and added to data base");
+        System.out.println(GREEN + "New employee created and added to data base" + RESET);
         System.out.println(emp);
     }
 
@@ -245,7 +259,7 @@ public class Payroll {
 //        Checking of the employee is in the array list or not
         Employee found = employees.stream().filter(employee -> employee.getUserName().equals(name)).findFirst().orElse(null);
         if (found == null) {
-            System.out.println(YELLOW+"Username not found..Please try again"+RESET);
+            System.out.println(YELLOW + "Username not found..Please try again" + RESET);
             return;
         }
         System.out.println("Successfully logged in...");

@@ -25,6 +25,10 @@ public abstract class Employee implements Serializable {
         Employee.nextID++;
     }
 
+    public static void setNextID(int nextID) {
+        Employee.nextID = nextID;
+    }
+
     public String getEmpName() {
         return empName;
     }
