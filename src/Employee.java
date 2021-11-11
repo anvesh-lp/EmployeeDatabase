@@ -29,6 +29,22 @@ public abstract class Employee implements Serializable {
         Employee.nextID = nextID;
     }
 
+    public double getBaseSalary() {
+        return baseSalary;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public static int getNextID() {
+        return nextID;
+    }
+
     public String getEmpName() {
         return empName;
     }

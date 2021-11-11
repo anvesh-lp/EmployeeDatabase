@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.Scanner;
 
 public class Hourly extends Employee{
@@ -7,7 +8,7 @@ public class Hourly extends Employee{
 
     @Override
     public double getPay() {
-        System.out.println("Enter the number of hours for this pay period");
+        System.out.println("Enter the number of hours for this pay period (Half of the month)  for employee "+this.empName);
         Scanner anv= new Scanner(System.in);
         int hours=anv.nextInt();
         return baseSalary*hours;

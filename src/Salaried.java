@@ -1,3 +1,5 @@
+import java.util.Date;
+
 public class Salaried extends Employee{
     public Salaried(String userName, double baseSalary, String empName) {
         super(userName, baseSalary, empName);

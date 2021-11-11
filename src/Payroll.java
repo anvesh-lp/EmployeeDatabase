@@ -1,5 +1,9 @@
+
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,6 +17,7 @@ public class Payroll {
 
     private ArrayList<Employee> employees = new ArrayList<>();
     private ArrayList<Employee> terminated = new ArrayList<>();
+    private PrintWriter writer=null;
     private Employee currentUser;
     private int currentId = -1;
     private static String MENU = "Payroll Menu\n\t1. Log In "
@@ -22,6 +27,19 @@ public class Payroll {
             + "\n\t5. Terminate employees"
             + "\n\t6. Pay employees \n\t0. Exit system" +
             "\nEnter your choice";
+
+
+//    Constructor to create the boss and intitalize the employees
+    public Payroll(){
+        try {
+//            To open the file inside the constructor
+            File report = new File("payroll.txt");
+            writer = new PrintWriter(report);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        doMenu();
+    }
 
 
     //    Do menu to prompt user the choises
@@ -38,14 +56,19 @@ public class Payroll {
                     try {
                         ObjectInputStream objInput = new ObjectInputStream(fs);
                         emp = (Employee) objInput.readObject();
+//                        System.out.println(emp);
                         count++;
                         employees.add(emp);
                     } catch (EOFException e) {
                         break;
                     }
                 }
-                System.out.println(count);
-                Employee.setNextID(count - 1);
+                fs.close();
+//                count=employees.size();
+//                System.out.println(count);
+                if (count!=0){
+                    Employee.setNextID(count);
+                }
                 if (count == 0) {
                     throw new FileNotFoundException();
                 }
@@ -82,7 +105,25 @@ public class Payroll {
 
     private Employee addToFile(Scanner anve, String username, String name) throws IOException {
         double salary = anve.nextDouble();
-        Employee firstEmployee = new Hourly(username, salary, name);
+        System.out.println("Please choose payroll type \n\t1.Salaried\n\t2.Hourly");
+        int num=-1;
+            while (true) {
+                try {
+                    num = anve.nextInt();
+                    if (num<1 || num>2){
+                        throw new InputMismatchException();
+                    }
+                    break;
+                }catch (InputMismatchException e){
+                    System.out.println(ANSI_RED+"Invalid Input please choose either 1 or 2"+RESET);
+                }
+            }
+        Employee firstEmployee=null;
+        if (num==2){
+            firstEmployee = new Hourly(username, salary, name);
+        }else {
+            firstEmployee=new Salaried(username,salary,name);
+        }
 
         FileOutputStream writer = new FileOutputStream("employee.txt", true);
         ObjectOutputStream obj = new ObjectOutputStream(writer);
@@ -93,28 +134,37 @@ public class Payroll {
         return firstEmployee;
     }
 
-    private void updateFile() {
-        for(Employee emp:employees){
-            FileOutputStream writer= null;
-            ObjectOutputStream obj;
-            try {
-                writer = new FileOutputStream("employee.txt",false);
-                 obj= new ObjectOutputStream(writer);
+
+
+    private void updateFile() throws IOException {
+        FileOutputStream writer= null;
+        try {
+            ObjectOutputStream obj=null;
+            writer = new FileOutputStream("employee.txt");
+            for (Employee emp : employees) {
+                obj = new ObjectOutputStream(writer);
                 obj.writeObject(emp);
-                obj.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }finally {
-                if (writer!=null){
-                    try {
-                        writer.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    obj.flush();
+            }
+            if (obj!=null)
+            obj.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (writer!=null){
+                try {
+
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
+
     }
+
 
     //    Show menu function to show the use his choises
     private void showMenu() throws IOException {
@@ -129,12 +179,16 @@ public class Payroll {
                 switch (choice) {
                     case 0:
                         run = false;
+                        if (terminated.size()!=0){
+                            System.out.println("Terminated employees");
+                            terminated.forEach(System.out::println);
+                        }
                         break;
                     case 1:
                         dologin();
                         break;
                     case 2:
-                        System.out.println(currentId);
+//                        System.out.println(currentId);
                         if (currentId == -1) {
                             System.out.println("You must be logged in to add employee");
                             break;
@@ -170,11 +224,66 @@ public class Payroll {
      * method to be implemented
      */
     private void payEmployee() {
-        System.out.println("Functionality coming soon");
+//        System.out.println("Functionality coming soon");
+        Scanner anv=new Scanner(System.in);
+
+        StringBuilder s= new StringBuilder();
+        for (Employee emp : employees) {
+            if (emp.getEmpID()==0){
+                continue;
+            }
+            double pay=emp.getPay();
+            double updated=0;
+            System.out.println("Any OverTime Hours? 1.yes 2.No \tenter a number");
+            int num=anv.nextInt();
+            int h=0;
+            if (num==1){
+                System.out.println("enter no of overtimeHours");
+                int hours;
+                while (true){
+                    try {
+                        hours=anv.nextInt();
+                        if (hours<=0){
+                            throw new InputMismatchException();
+                        }
+                        break;
+                    }catch(InputMismatchException e){
+                        System.out.println("Please enter valid hours greater than zero");
+                    }
+                }
+                if (emp instanceof Hourly){
+                    updated=hours*emp.getBaseSalary()*1.5;
+                    pay+=updated;
+                }else {
+                    if (hours>=100){
+                        updated=(10*pay)/100;
+                        pay+=updated;
+                    }
+                }
+                h=hours;
+            }
+            s.append(String.format("%.2f (overtime Hours %s)", pay,h)).append(String.format("\t\t%05d", emp.getEmpID())).append(String.format("\t\t%s", emp.getEmpName()));
+            s.append("\n");
+        }
+        String sp="Payroll Report  \t\t" + new Date();
+        String so="Pay" + "\t\t" + "ID" + "\t\t" + "Name";
+        System.out.println(sp);
+        System.out.println(so);
+        if (writer!=null){
+            writer.write(sp);
+            writer.write("\n");
+            writer.write(so);
+            writer.write("\n");
+            writer.write(String.valueOf(s));
+            writer.flush();
+            writer.close();
+        }
+        System.out.println(s);
+
 
     }
 
-    private void terminateEmployee() {
+    private void terminateEmployee() throws IOException {
         if (currentId == 0) {
             System.out.println(" Enter the employee id you wish to terminate ");
             Scanner anv = new Scanner(System.in);
@@ -191,7 +300,8 @@ public class Payroll {
             }
 
         } else {
-            terminated.add(employees.remove(currentId));
+            employees.removeIf(employee -> employee.getEmpID()==currentId);
+            terminated.add(currentUser);
             updateFile();
             System.out.println(YELLOW + "You have been successully terminated" + RESET);
             currentUser = null;
@@ -200,31 +310,39 @@ public class Payroll {
         System.out.println("Functionality coming soon");
     }
 
-    private void updateEmployee() {
+    private void updateEmployee() throws IOException {
         if (currentId == 0) {
             System.out.println("Enter the loginname of the employee you want to edit ");
             Scanner anv = new Scanner(System.in);
             String name = anv.next();
+            anv.nextLine();
             Employee emp = employees.stream().filter(employee -> employee.getUserName().equals(name)).findFirst().orElse(null);
             if (emp == null) {
                 System.out.println(YELLOW + "Employee you are looking for is not in the database" + RESET);
             } else {
-                System.out.println("enter the new full name of the employee " + emp.getEmpName());
+                System.out.println("enter the new full name of the employee (previous name)" + emp.getEmpName());
                 String fullname = anv.nextLine();
                 anv.nextLine();
-                System.out.println("Enter the updated salary of the employee");
+                System.out.println(fullname);
+                System.out.println("Enter the updated salary of the employee (previous salary) "+emp.getBaseSalary());
                 double salary = anv.nextDouble();
                 emp.setBaseSalary(salary);
                 emp.setEmpName(fullname);
-                updateFile();
                 System.out.println("Employee after updating the details \n " + emp);
+                updateFile();
             }
+        }else {
+            System.out.println("Only boss could update");
         }
     }
 
     private void listEmployees() {
         if (currentId == 0) {
-            employees.forEach(System.out::println);
+            employees.forEach(employee -> {
+                if (employee.getEmpID()!=currentId){
+                    System.out.println(employee);
+                }
+            });
         } else {
             System.out.println(currentUser);
         }
