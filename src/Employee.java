@@ -8,6 +8,7 @@ public abstract class Employee implements Serializable {
     protected double baseSalary;
     protected String startDate;
     protected String empName;
+    protected String password;
 
     private static int nextID = 0;
 

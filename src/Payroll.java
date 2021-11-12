@@ -1,5 +1,7 @@
 
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class Payroll {
 
     private ArrayList<Employee> employees = new ArrayList<>();
     private ArrayList<Employee> terminated = new ArrayList<>();
-    private PrintWriter writer=null;
+    private PrintWriter writer = null;
     private Employee currentUser;
     private int currentId = -1;
     private static String MENU = "Payroll Menu\n\t1. Log In "
@@ -29,14 +31,18 @@ public class Payroll {
             "\nEnter your choice";
 
 
-//    Constructor to create the boss and intitalize the employees
-    public Payroll(){
+    //    Constructor to create the boss and intitalize the employees
+    public Payroll() {
         try {
 //            To open the file inside the constructor
             File report = new File("payroll.txt");
             writer = new PrintWriter(report);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        finally {
+            if (writer!=null)
+                writer.close();
         }
 //        doMenu();
     }
@@ -66,7 +72,7 @@ public class Payroll {
                 fs.close();
 //                count=employees.size();
 //                System.out.println(count);
-                if (count!=0){
+                if (count != 0) {
                     Employee.setNextID(count);
                 }
                 if (count == 0) {
@@ -106,23 +112,23 @@ public class Payroll {
     private Employee addToFile(Scanner anve, String username, String name) throws IOException {
         double salary = anve.nextDouble();
         System.out.println("Please choose payroll type \n\t1.Salaried\n\t2.Hourly");
-        int num=-1;
-            while (true) {
-                try {
-                    num = anve.nextInt();
-                    if (num<1 || num>2){
-                        throw new InputMismatchException();
-                    }
-                    break;
-                }catch (InputMismatchException e){
-                    System.out.println(ANSI_RED+"Invalid Input please choose either 1 or 2"+RESET);
+        int num = -1;
+        while (true) {
+            try {
+                num = anve.nextInt();
+                if (num < 1 || num > 2) {
+                    throw new InputMismatchException();
                 }
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println(ANSI_RED + "Invalid Input please choose either 1 or 2" + RESET);
             }
-        Employee firstEmployee=null;
-        if (num==2){
+        }
+        Employee firstEmployee = null;
+        if (num == 2) {
             firstEmployee = new Hourly(username, salary, name);
-        }else {
-            firstEmployee=new Salaried(username,salary,name);
+        } else {
+            firstEmployee = new Salaried(username, salary, name);
         }
 
         FileOutputStream writer = new FileOutputStream("employee.txt", true);
@@ -135,25 +141,24 @@ public class Payroll {
     }
 
 
-
     private void updateFile() throws IOException {
-        FileOutputStream writer= null;
+        FileOutputStream writer = null;
         try {
-            ObjectOutputStream obj=null;
+            ObjectOutputStream obj = null;
             writer = new FileOutputStream("employee.txt");
             for (Employee emp : employees) {
                 obj = new ObjectOutputStream(writer);
                 obj.writeObject(emp);
-                    obj.flush();
+                obj.flush();
             }
-            if (obj!=null)
-            obj.close();
+            if (obj != null)
+                obj.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if (writer!=null){
+        } finally {
+            if (writer != null) {
                 try {
 
                     writer.close();
@@ -179,7 +184,7 @@ public class Payroll {
                 switch (choice) {
                     case 0:
                         run = false;
-                        if (terminated.size()!=0){
+                        if (terminated.size() != 0) {
                             System.out.println("Terminated employees");
                             terminated.forEach(System.out::println);
                         }
@@ -225,51 +230,51 @@ public class Payroll {
      */
     private void payEmployee() {
 //        System.out.println("Functionality coming soon");
-        Scanner anv=new Scanner(System.in);
+        Scanner anv = new Scanner(System.in);
 
-        StringBuilder s= new StringBuilder();
+        StringBuilder s = new StringBuilder();
         for (Employee emp : employees) {
-            if (emp.getEmpID()==0){
+            if (emp.getEmpID() == 0) {
                 continue;
             }
-            double pay=emp.getPay();
-            double updated=0;
+            double pay = emp.getPay();
+            double updated = 0;
             System.out.println("Any OverTime Hours? 1.yes 2.No \tenter a number");
-            int num=anv.nextInt();
-            int h=0;
-            if (num==1){
+            int num = anv.nextInt();
+            int h = 0;
+            if (num == 1) {
                 System.out.println("enter no of overtimeHours");
                 int hours;
-                while (true){
+                while (true) {
                     try {
-                        hours=anv.nextInt();
-                        if (hours<=0){
+                        hours = anv.nextInt();
+                        if (hours <= 0) {
                             throw new InputMismatchException();
                         }
                         break;
-                    }catch(InputMismatchException e){
+                    } catch (InputMismatchException e) {
                         System.out.println("Please enter valid hours greater than zero");
                     }
                 }
-                if (emp instanceof Hourly){
-                    updated=hours*emp.getBaseSalary()*1.5;
-                    pay+=updated;
-                }else {
-                    if (hours>=100){
-                        updated=(10*pay)/100;
-                        pay+=updated;
+                if (emp instanceof Hourly) {
+                    updated = hours * emp.getBaseSalary() * 1.5;
+                    pay += updated;
+                } else {
+                    if (hours >= 100) {
+                        updated = (10 * pay) / 100;
+                        pay += updated;
                     }
                 }
-                h=hours;
+                h = hours;
             }
-            s.append(String.format("%.2f (overtime Hours %s)", pay,h)).append(String.format("\t\t%05d", emp.getEmpID())).append(String.format("\t\t%s", emp.getEmpName()));
+            s.append(String.format("%.2f (overtime Hours %s)", pay, h)).append(String.format("\t\t%05d", emp.getEmpID())).append(String.format("\t\t%s", emp.getEmpName()));
             s.append("\n");
         }
-        String sp="Payroll Report  \t\t" + new Date();
-        String so="Pay" + "\t\t" + "ID" + "\t\t" + "Name";
+        String sp = "Payroll Report  \t\t" + new Date();
+        String so = "Pay" + "\t\t" + "ID" + "\t\t" + "Name";
         System.out.println(sp);
         System.out.println(so);
-        if (writer!=null){
+        if (writer != null) {
             writer.write(sp);
             writer.write("\n");
             writer.write(so);
@@ -300,7 +305,7 @@ public class Payroll {
             }
 
         } else {
-            employees.removeIf(employee -> employee.getEmpID()==currentId);
+            employees.removeIf(employee -> employee.getEmpID() == currentId);
             terminated.add(currentUser);
             updateFile();
             System.out.println(YELLOW + "You have been successully terminated" + RESET);
@@ -324,14 +329,14 @@ public class Payroll {
                 String fullname = anv.nextLine();
                 anv.nextLine();
                 System.out.println(fullname);
-                System.out.println("Enter the updated salary of the employee (previous salary) "+emp.getBaseSalary());
+                System.out.println("Enter the updated salary of the employee (previous salary) " + emp.getBaseSalary());
                 double salary = anv.nextDouble();
                 emp.setBaseSalary(salary);
                 emp.setEmpName(fullname);
                 System.out.println("Employee after updating the details \n " + emp);
                 updateFile();
             }
-        }else {
+        } else {
             System.out.println("Only boss could update");
         }
     }
@@ -339,7 +344,7 @@ public class Payroll {
     private void listEmployees() {
         if (currentId == 0) {
             employees.forEach(employee -> {
-                if (employee.getEmpID()!=currentId){
+                if (employee.getEmpID() != currentId) {
                     System.out.println(employee);
                 }
             });
@@ -385,6 +390,26 @@ public class Payroll {
 //        Setting the current user to found employee
         currentUser = found;
         currentId = found.getEmpID();
+    }
+
+    public static boolean getNewPassword(String fpassword, String secondpassword) throws NoSuchAlgorithmException {
+        MessageDigest digest1 = MessageDigest.getInstance("SHA-256");
+        digest1.update(fpassword.getBytes());
+        byte[] byteData = digest1.digest();
+        StringBuilder encrypted1 = new StringBuilder();
+        for (byte datum : byteData) {
+            String hex = Integer.toHexString(0xff & datum);
+            encrypted1.append(hex);
+        }
+        MessageDigest digest2 = MessageDigest.getInstance("SHA-256");
+        digest2.update(secondpassword.getBytes());
+        byte byteData1[] = digest1.digest();
+        StringBuilder encrypted2 = new StringBuilder();
+        for (byte byteDatum : byteData) {
+            String hex1 = Integer.toHexString(0xff & byteDatum);
+            encrypted2.append(hex1);
+        }
+        return encrypted1.toString().equals(encrypted2.toString());
     }
 }
 
