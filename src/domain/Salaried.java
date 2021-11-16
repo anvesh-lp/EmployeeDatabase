@@ -1,4 +1,4 @@
-import java.util.Date;
+package domain;
 
 public class Salaried extends Employee{
     public Salaried(String userName, double baseSalary, String empName) {

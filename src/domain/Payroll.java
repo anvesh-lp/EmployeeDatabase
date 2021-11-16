@@ -1,15 +1,17 @@
+package domain;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Payroll {
+public class Payroll extends Application {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String RESET = "\033[0m";  // Reset text colour
     public static final String YELLOW = "\033[0;33m";  // YELLOW
@@ -22,7 +24,7 @@ public class Payroll {
     private PrintWriter writer = null;
     private Employee currentUser;
     private int currentId = -1;
-    private static String MENU = "Payroll Menu\n\t1. Log In "
+    private static String MENU = "domain.Payroll Menu\n\t1. Log In "
             + "\n\t2. Enter employees"
             + "\n\t3. List Employees"
             + "\n\t4. Update employees"
@@ -45,6 +47,12 @@ public class Payroll {
                 writer.close();
         }
 //        doMenu();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
+
     }
 
 
@@ -111,7 +119,7 @@ public class Payroll {
 
     private Employee addToFile(Scanner anve, String username, String name) throws IOException {
         double salary = anve.nextDouble();
-        System.out.println("Please choose payroll type \n\t1.Salaried\n\t2.Hourly");
+        System.out.println("Please choose payroll type \n\t1.domain.Salaried\n\t2.domain.Hourly");
         int num = -1;
         while (true) {
             try {
@@ -153,14 +161,11 @@ public class Payroll {
             }
             if (obj != null)
                 obj.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (writer != null) {
                 try {
-
                     writer.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -270,7 +275,7 @@ public class Payroll {
             s.append(String.format("%.2f (overtime Hours %s)", pay, h)).append(String.format("\t\t%05d", emp.getEmpID())).append(String.format("\t\t%s", emp.getEmpName()));
             s.append("\n");
         }
-        String sp = "Payroll Report  \t\t" + new Date();
+        String sp = "domain.Payroll Report  \t\t" + new Date();
         String so = "Pay" + "\t\t" + "ID" + "\t\t" + "Name";
         System.out.println(sp);
         System.out.println(so);
@@ -300,7 +305,7 @@ public class Payroll {
                 if (employees.removeIf(employee -> employee.getEmpID() == id)) {
                     terminated.add(emp);
                     updateFile();
-                    System.out.println(GREEN + "Employee has been successfully terminated" + RESET);
+                    System.out.println(GREEN + "domain.Employee has been successfully terminated" + RESET);
                 }
             }
 
@@ -323,7 +328,7 @@ public class Payroll {
             anv.nextLine();
             Employee emp = employees.stream().filter(employee -> employee.getUserName().equals(name)).findFirst().orElse(null);
             if (emp == null) {
-                System.out.println(YELLOW + "Employee you are looking for is not in the database" + RESET);
+                System.out.println(YELLOW + "domain.Employee you are looking for is not in the database" + RESET);
             } else {
                 System.out.println("enter the new full name of the employee (previous name)" + emp.getEmpName());
                 String fullname = anv.nextLine();
@@ -333,7 +338,7 @@ public class Payroll {
                 double salary = anv.nextDouble();
                 emp.setBaseSalary(salary);
                 emp.setEmpName(fullname);
-                System.out.println("Employee after updating the details \n " + emp);
+                System.out.println("domain.Employee after updating the details \n " + emp);
                 updateFile();
             }
         } else {

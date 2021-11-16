@@ -1,7 +1,7 @@
----------- Welcome to Employee database -> Anvesh ----------
+---------- Welcome to domain.Employee database -> Anvesh ----------
 00000	anvesh	90000.0	09/11/2021	anvesh kunuguntla
 00001	vamshi	10000.0	09/11/2021	vasmhi kunuguntla
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -15,7 +15,7 @@ enter your login name
 anvesh
 Successfully logged in...
 hello anvesh kunuguntla
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -33,12 +33,12 @@ hari narh
 Enter the salary of the employee
 123
 Please choose payroll type
-	1.Salaried
-	2.Hourly
+	1.domain.Salaried
+	2.domain.Hourly
 2
 New employee created and added to data base
 00002	hari	123.0	09/11/2021	hari narh
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -56,12 +56,12 @@ praneeth
 Enter the salary of the employee
 3000
 Please choose payroll type
-	1.Salaried
-	2.Hourly
+	1.domain.Salaried
+	2.domain.Hourly
 2
 New employee created and added to data base
 00003	chandu	3000.0	09/11/2021	praneeth
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -79,12 +79,12 @@ chandu
 Enter the salary of the employee
 3342
 Please choose payroll type
-	1.Salaried
-	2.Hourly
+	1.domain.Salaried
+	2.domain.Hourly
 2
 New employee created and added to data base
 00004	praeent	3342.0	09/11/2021	chandu
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -102,12 +102,12 @@ gane
 Enter the salary of the employee
 4000
 Please choose payroll type
-	1.Salaried
-	2.Hourly
+	1.domain.Salaried
+	2.domain.Hourly
 2
 New employee created and added to data base
 00005	gan	4000.0	09/11/2021	gane
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -125,12 +125,12 @@ reddy
 Enter the salary of the employee
 2312
 Please choose payroll type
-	1.Salaried
-	2.Hourly
+	1.domain.Salaried
+	2.domain.Hourly
 2
 New employee created and added to data base
 00006	kavya	2312.0	09/11/2021	reddy
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -146,7 +146,7 @@ Enter your choice
 00004	praeent	3342.0	09/11/2021	chandu
 00005	gan	4000.0	09/11/2021	gane
 00006	kavya	2312.0	09/11/2021	reddy
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -164,9 +164,9 @@ harinath
 harinath
 Enter the updated salary of the employee (previous salary) 123.0
 10000
-Employee after updating the details
+domain.Employee after updating the details
  00002	hari	10000.0	09/11/2021	harinath
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -184,9 +184,9 @@ kavya sandi reddy
 kavya sandi reddy
 Enter the updated salary of the employee (previous salary) 2312.0
 2000
-Employee after updating the details
+domain.Employee after updating the details
  00006	kavya	2000.0	09/11/2021	kavya sandi reddy
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -202,7 +202,7 @@ Enter your choice
 00004	praeent	3342.0	09/11/2021	chandu
 00005	gan	4000.0	09/11/2021	gane
 00006	kavya	2000.0	09/11/2021	kavya sandi reddy
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -214,9 +214,9 @@ Enter your choice
 5
  Enter the employee id you wish to terminate
 4
-Employee has been successfully terminated
+domain.Employee has been successfully terminated
 Functionality coming soon
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -231,7 +231,7 @@ Enter your choice
 00003	chandu	3000.0	09/11/2021	praneeth
 00005	gan	4000.0	09/11/2021	gane
 00006	kavya	2000.0	09/11/2021	kavya sandi reddy
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -251,14 +251,14 @@ Process finished with exit code 0
 
 
 
----------- Welcome to Employee database -> Anvesh ----------
+---------- Welcome to domain.Employee database -> Anvesh ----------
 00000	anvesh	90000.0	09/11/2021	anvesh kunuguntla
 00001	vamshi	10000.0	09/11/2021	vasmhi kunuguntla
 00002	hari	10000.0	09/11/2021	harinath
 00003	chandu	3000.0	09/11/2021	praneeth
 00005	gan	4000.0	09/11/2021	gane
 00006	kavya	2000.0	09/11/2021	kavya sandi reddy
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -272,7 +272,7 @@ enter your login name
 anvesh
 Successfully logged in...
 hello anvesh kunuguntla
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -287,7 +287,7 @@ Enter your choice
 00003	chandu	3000.0	09/11/2021	praneeth
 00005	gan	4000.0	09/11/2021	gane
 00006	kavya	2000.0	09/11/2021	kavya sandi reddy
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -325,7 +325,7 @@ Any OverTime Hours? 1.yes 2.No 	enter a number
 1
 enter no of overtimeHours
 4
-Payroll Report  		Tue Nov 09 02:30:17 EST 2021
+domain.Payroll Report  		Tue Nov 09 02:30:17 EST 2021
 Pay		ID		Name
 145000.00 (overtime Hours 7)		00001		vasmhi kunuguntla
 80000.00 (overtime Hours 0)		00002		harinath
@@ -333,7 +333,7 @@ Pay		ID		Name
 62000.00 (overtime Hours 7)		00005		gane
 80000.00 (overtime Hours 4)		00006		kavya sandi reddy
 
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees

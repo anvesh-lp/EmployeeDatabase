@@ -1,4 +1,5 @@
-import java.util.Date;
+package domain;
+
 import java.util.Scanner;
 
 public class Hourly extends Employee{

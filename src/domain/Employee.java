@@ -1,3 +1,5 @@
+package domain;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +16,7 @@ public abstract class Employee implements Serializable {
 
     private static final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-    // Employee constructor
+    // domain.Employee constructor
     public Employee(String userName, double baseSalary, String empName) {
         this.loginName = userName;
         this.baseSalary = baseSalary;

@@ -1,4 +1,4 @@
----------- Welcome to Employee database -> Anvesh ----------
+---------- Welcome to domain.Employee database -> Anvesh ----------
 Database is missing......!
 Enter a login name to register
 anvesh
@@ -7,10 +7,10 @@ anvesh kunuguntla
 Enter your base salary
 90000
 Please choose payroll type
-	1.Salaried
-	2.Hourly
+	1.domain.Salaried
+	2.domain.Hourly
 2
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -24,7 +24,7 @@ enter your login name
 anvesh
 Successfully logged in...
 hello anvesh kunuguntla
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -42,12 +42,12 @@ vasmhi kunuguntla
 Enter the salary of the employee
 10000
 Please choose payroll type
-	1.Salaried
-	2.Hourly
+	1.domain.Salaried
+	2.domain.Hourly
 2
 New employee created and added to data base
 00001	vamshi	10000.0	09/11/2021	vasmhi kunuguntla
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
@@ -58,7 +58,7 @@ Payroll Menu
 Enter your choice
 3
 00001	vamshi	10000.0	09/11/2021	vasmhi kunuguntla
-Payroll Menu
+domain.Payroll Menu
 	1. Log In
 	2. Enter employees
 	3. List Employees
