@@ -1,5 +1,6 @@
 package domain;
 
+import controllers.MainWindow;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -11,19 +12,22 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Payroll extends Application {
+public class Payroll{
     public static final String ANSI_RED = "\u001B[31m";
     public static final String RESET = "\033[0m";  // Reset text colour
     public static final String YELLOW = "\033[0;33m";  // YELLOW
     public static final String GREEN = "\033[0;32m";   // GREEN
 
+
     // Array list to store employee details
 
     private ArrayList<Employee> employees = new ArrayList<>();
     private ArrayList<Employee> terminated = new ArrayList<>();
+    private static Payroll payroll;
     private PrintWriter writer = null;
     private Employee currentUser;
     private int currentId = -1;
+
     private static String MENU = "domain.Payroll Menu\n\t1. Log In "
             + "\n\t2. Enter employees"
             + "\n\t3. List Employees"
@@ -39,6 +43,7 @@ public class Payroll extends Application {
 //            To open the file inside the constructor
             File report = new File("payroll.txt");
             writer = new PrintWriter(report);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,15 +51,28 @@ public class Payroll extends Application {
             if (writer!=null)
                 writer.close();
         }
-//        doMenu();
+        try {
+            doMenu();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-
-
+    public ArrayList<Employee> getEmployees() {
+        return employees;
     }
 
+    public ArrayList<Employee> getTerminated() {
+        return terminated;
+    }
+
+    public Employee getCurrentUser() {
+        return currentUser;
+    }
+
+    public int getCurrentId() {
+        return currentId;
+    }
 
     //    Do menu to prompt user the choises
     public void doMenu() throws IOException {
@@ -93,16 +111,16 @@ public class Payroll extends Application {
             }
         } catch (FileNotFoundException | ClassNotFoundException e) {
 //            Creating the boss if the user is logging the first time
-            Scanner anve = new Scanner(System.in);
-            System.out.println("Database is missing......!");
-            System.out.println("Enter a login name to register");
-            String username = anve.next();
-            anve.nextLine();
-            System.out.println("Enter your full name");
-            String name = anve.nextLine();
-            System.out.println("Enter your base salary");
-            addToFile(anve, username, name);
-            showMenu();
+//            Scanner anve = new Scanner(System.in);
+//            System.out.println("Database is missing......!");
+//            System.out.println("Enter a login name to register");
+//            String username = anve.next();
+//            anve.nextLine();
+//            System.out.println("Enter your full name");
+//            String name = anve.nextLine();
+//            System.out.println("Enter your base salary");
+//            addToFile(anve, username, name);
+//            showMenu();
         } finally {
             try {
 //                Closing the files
@@ -113,6 +131,14 @@ public class Payroll extends Application {
                 System.out.println();
             }
         }
+    }
+
+    public static Payroll getPayroll(){
+        if (payroll==null){
+            payroll=new Payroll();
+            return payroll;
+        }
+        return payroll;
     }
 
 //    Function to add an employee to the file
@@ -415,6 +441,11 @@ public class Payroll extends Application {
             encrypted2.append(hex1);
         }
         return encrypted1.toString().equals(encrypted2.toString());
+    }
+
+//    Check if username already exists in the database.
+    public boolean checkUnique(String username){
+        return employees.stream().anyMatch(employee -> employee.getUserName().equals(username));
     }
 }
 
