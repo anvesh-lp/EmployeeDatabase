@@ -434,9 +434,9 @@ public class Payroll{
         }
         MessageDigest digest2 = MessageDigest.getInstance("SHA-256");
         digest2.update(secondpassword.getBytes());
-        byte byteData1[] = digest1.digest();
+        byte[] byteData1 = digest2.digest();
         StringBuilder encrypted2 = new StringBuilder();
-        for (byte byteDatum : byteData) {
+        for (byte byteDatum : byteData1) {
             String hex1 = Integer.toHexString(0xff & byteDatum);
             encrypted2.append(hex1);
         }

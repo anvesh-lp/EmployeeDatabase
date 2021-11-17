@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
@@ -77,7 +78,7 @@ public class Registration implements Initializable {
     }
 
     @FXML
-    void onSubmit(ActionEvent event) throws IOException {
+    void onSubmit(ActionEvent event) throws IOException, NoSuchAlgorithmException {
 
         System.out.println("clicked");
         String fullname = name.getText();
@@ -116,6 +117,17 @@ public class Registration implements Initializable {
             radioButtonText.setVisible(true);
         } else {
             radioButtonText.setVisible(false);
+        }
+        String pass1=password1.getText();
+        String pass2=password2.getText();
+        if (pass1.equals("")||pass2.equals("")){
+            passwordText.setVisible(true);
+            passwordText.setText("Required field");
+        }else  if (!Payroll.getNewPassword(pass1,pass2)){
+            passwordText.setVisible(true);
+            passwordText.setText("Passwords do not match");
+        }else {
+            passwordText.setVisible(false);
         }
         if (!(fullname.equals("") || sal.equals("") || user.equals("") || type == null)) {
 //            submit.setDisable(false);
