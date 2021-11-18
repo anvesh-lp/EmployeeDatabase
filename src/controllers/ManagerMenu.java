@@ -1,15 +1,20 @@
 package controllers;
 
+import domain.Employee;
 import domain.Main;
 import domain.Payroll;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class ManagerMenu {
+public class ManagerMenu implements Initializable {
 
     @FXML
     private Button createemployeeButton;
@@ -57,4 +62,13 @@ public class ManagerMenu {
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ArrayList<Employee> employeeArrayList=payroll.getEmployees();
+        if (employeeArrayList.size()==0){
+            textAreaField.appendText("No Employees in the Database. Click on add to create new employee");
+        }else {
+            employeeArrayList.forEach(employee -> textAreaField.appendText(employee.toString()));
+        }
+    }
 }

@@ -1,6 +1,9 @@
 package controllers;
 
+import domain.Employee;
+import domain.Hourly;
 import domain.Payroll;
+import domain.Salaried;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -79,60 +82,62 @@ public class Registration implements Initializable {
 
     @FXML
     void onSubmit(ActionEvent event) throws IOException, NoSuchAlgorithmException {
-
-        System.out.println("clicked");
         String fullname = name.getText();
-
         String user = username.getText();
         String sal = salary.getText();
-        System.out.println(user);
-        System.out.println(sal);
+        String pass1 = password1.getText();
+        String pass2 = password2.getText();
         if (fullname.equals("")) {
-            fullnameText.setVisible(true);
-            fullnameText.setText("Field Required");
+            setVisibiity(fullnameText, "Field Required");
         } else {
             fullnameText.setVisible(false);
         }
         if (Objects.equals(user, "")) {
-            usernameText.setVisible(true);
-            usernameText.setText("Field Required");
+            setVisibiity(usernameText, "Field Required");
         } else if (payroll.checkUnique(user)) {
-            usernameText.setVisible(true);
-            usernameText.setText("UserName Already Exists");
+            setVisibiity(usernameText, "UserName Already Exists");
         } else {
             usernameText.setVisible(false);
         }
         if (sal.equals("")) {
-            salaryText.setVisible(true);
-            salaryText.setText("Field Required");
+            setVisibiity(salaryText, "Field Required");
         } else if (!validateInput(sal)) {
-            salaryText.setVisible(true);
-            salaryText.setText("Invalid input");
+            setVisibiity(salaryText, "Invalid input");
         } else {
             salaryText.setVisible(false);
         }
-
         if (type == null) {
-            radioButtonText.setText("Please select one");
-            radioButtonText.setVisible(true);
+            setVisibiity(radioButtonText, "Please select one");
         } else {
             radioButtonText.setVisible(false);
         }
-        String pass1=password1.getText();
-        String pass2=password2.getText();
-        if (pass1.equals("")||pass2.equals("")){
-            passwordText.setVisible(true);
-            passwordText.setText("Required field");
-        }else  if (!Payroll.getNewPassword(pass1,pass2)){
-            passwordText.setVisible(true);
-            passwordText.setText("Passwords do not match");
-        }else {
+        if (pass1.equals("") || pass2.equals("")) {
+            setVisibiity(passwordText, "Required field");
+        } else if (!Payroll.getNewPassword(pass1, pass2)) {
+            setVisibiity(passwordText, "Passwords do not match");
+            pass1 = "";
+            pass2 = "";
+        } else {
             passwordText.setVisible(false);
         }
-        if (!(fullname.equals("") || sal.equals("") || user.equals("") || type == null)) {
+        if (user.equals("")) {
+            setVisibiity(usernameText, "Required Field");
+        } else if (payroll.checkuserNameUnique(user)) {
+            setVisibiity(usernameText, "UserName already Exists");
+        } else {
+            usernameText.setVisible(false);
+        }
+        if (!(fullname.equals("") || sal.equals("") || user.equals("") || type == null || pass2.equals("") || pass1.equals(""))) {
+            domain.Employee emp = null;
 //            submit.setDisable(false);
+            payroll.createNewEmployee(user, Double.parseDouble(sal), fullname,type,pass1);
             window.setStage("../UI/menuPage.fxml", "employee Menu");
         }
+    }
+
+    private void setVisibiity(Text fullnameText, String s) {
+        fullnameText.setVisible(true);
+        fullnameText.setText(s);
     }
 
     public boolean validateInput(String num) {

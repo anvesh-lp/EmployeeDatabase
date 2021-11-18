@@ -32,6 +32,10 @@ public abstract class Employee implements Serializable {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public static void setNextID(int nextID) {
         Employee.nextID = nextID;
     }

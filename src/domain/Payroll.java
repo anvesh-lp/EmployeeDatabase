@@ -1,8 +1,6 @@
 package domain;
 
-import controllers.MainWindow;
-import javafx.application.Application;
-import javafx.stage.Stage;
+import controllers.EmployeeType;
 
 import java.io.*;
 import java.security.MessageDigest;
@@ -50,11 +48,7 @@ public class Payroll {
             if (writer != null)
                 writer.close();
         }
-        try {
-            doMenu();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public ArrayList<Employee> getEmployees() {
@@ -99,16 +93,11 @@ public class Payroll {
                 if (count != 0) {
                     Employee.setNextID(count);
                 }
-                if (count == 0) {
-                    throw new FileNotFoundException();
-                }
 //                Calling show menu function to show the user his choises
 //                showMenu();
-            } else {
-                throw new FileNotFoundException();
             }
         } catch (FileNotFoundException | ClassNotFoundException e) {
-            System.out.println(e);
+            e.printStackTrace();
         } finally {
             try {
 //                Closing the files
@@ -130,6 +119,15 @@ public class Payroll {
     }
 
 //    Function to add an employee to the file
+
+    private void addToFile(Employee employee) throws IOException {
+        FileOutputStream writer = new FileOutputStream("employee.txt", true);
+        ObjectOutputStream obj = new ObjectOutputStream(writer);
+        obj.writeObject(employee);
+        obj.flush();
+        writer.close();
+        employees.add(employee);
+    }
 
     private Employee addToFile(Scanner anve, String username, String name) throws IOException {
         double salary = anve.nextDouble();
@@ -392,6 +390,14 @@ public class Payroll {
         System.out.println(emp);
     }
 
+    public void createNewEmployee(Employee newemployee) throws IOException {
+        addToFile(newemployee);
+    }
+
+    public boolean checkuserNameUnique(String username) {
+        return employees.stream().anyMatch(employee -> employee.getUserName().equals(username));
+    }
+
     //    Login fucntion for logging the user
     private void dologin() {
         Scanner anv = new Scanner(System.in);
@@ -437,5 +443,19 @@ public class Payroll {
     public boolean checkUnique(String username) {
         return employees.stream().anyMatch(employee -> employee.getUserName().equals(username));
     }
+
+    public void createNewEmployee(String user, double parseDouble, String fullname, EmployeeType type, String pass1) throws IOException {
+        Employee emp=null;
+        if (type == EmployeeType.HOURLY) {
+            emp = new Hourly(user, parseDouble, fullname);
+            emp.setPassword(pass1);
+        } else if (type==EmployeeType.SALARIED){
+            emp = new Salaried(user, parseDouble, fullname);
+            emp.setPassword(pass1);
+        }
+        addToFile(emp);
+    }
+
+
 }
 

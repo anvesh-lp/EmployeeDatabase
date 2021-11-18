@@ -31,8 +31,8 @@ public class MainWindow extends Application {
         stage.setTitle("Main Window");
         stage.show();
         Payroll payroll=new Payroll();
-        MainWindowController controller=new MainWindowController();
-        controller.enterButton(new ActionEvent());
+//        MainWindowController controller=new MainWindowController();
+//        controller.enterButton(new ActionEvent());
     }
 
 

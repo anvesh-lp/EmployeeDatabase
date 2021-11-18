@@ -11,7 +11,7 @@ public class MainWindowController {
     public static MainWindow window;
     public Payroll payrol = Payroll.getPayroll();
 
-    //    @FXML
+        @FXML
     public void enterButton(ActionEvent event) throws IOException {
         System.out.println("Button clicked");
         payrol.doMenu();
