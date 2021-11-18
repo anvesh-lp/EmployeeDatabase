@@ -8,21 +8,27 @@ import java.io.IOException;
 
 
 public class MainWindowController {
-    public MainWindow window=new MainWindow();
-    public Payroll payrol=Payroll.getPayroll();
+    public static MainWindow window;
+    public Payroll payrol = Payroll.getPayroll();
 
-//    @FXML
+    //    @FXML
     public void enterButton(ActionEvent event) throws IOException {
         System.out.println("Button clicked");
         payrol.doMenu();
-        if (payrol.getEmployees().size()==0){
+        if (payrol.getEmployees().size() == 0) {
 //          Show Registration page
-            window.setStage("../UI/Registration.fxml","");
-        }else {
+            getMainWindowInstance().setStage("../UI/Registration.fxml", "");
+        } else {
 //          Show Login Page
-            window.setStage("../UI/login.fxml","Login");
+            getMainWindowInstance().setStage("../UI/login.fxml", "Login");
         }
-
     }
 
+    public static MainWindow getMainWindowInstance() {
+        if (window == null) {
+            window = new MainWindow();
+            return window;
+        }
+        return window;
+    }
 }

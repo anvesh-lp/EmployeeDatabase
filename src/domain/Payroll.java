@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Payroll{
+public class Payroll {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String RESET = "\033[0m";  // Reset text colour
     public static final String YELLOW = "\033[0;33m";  // YELLOW
@@ -46,9 +46,8 @@ public class Payroll{
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            if (writer!=null)
+        } finally {
+            if (writer != null)
                 writer.close();
         }
         try {
@@ -96,8 +95,7 @@ public class Payroll{
                     }
                 }
                 fs.close();
-//                count=employees.size();
-//                System.out.println(count);
+
                 if (count != 0) {
                     Employee.setNextID(count);
                 }
@@ -105,22 +103,12 @@ public class Payroll{
                     throw new FileNotFoundException();
                 }
 //                Calling show menu function to show the user his choises
-                showMenu();
+//                showMenu();
             } else {
                 throw new FileNotFoundException();
             }
         } catch (FileNotFoundException | ClassNotFoundException e) {
-//            Creating the boss if the user is logging the first time
-//            Scanner anve = new Scanner(System.in);
-//            System.out.println("Database is missing......!");
-//            System.out.println("Enter a login name to register");
-//            String username = anve.next();
-//            anve.nextLine();
-//            System.out.println("Enter your full name");
-//            String name = anve.nextLine();
-//            System.out.println("Enter your base salary");
-//            addToFile(anve, username, name);
-//            showMenu();
+            System.out.println(e);
         } finally {
             try {
 //                Closing the files
@@ -133,9 +121,9 @@ public class Payroll{
         }
     }
 
-    public static Payroll getPayroll(){
-        if (payroll==null){
-            payroll=new Payroll();
+    public static Payroll getPayroll() {
+        if (payroll == null) {
+            payroll = new Payroll();
             return payroll;
         }
         return payroll;
@@ -164,7 +152,6 @@ public class Payroll{
         } else {
             firstEmployee = new Salaried(username, salary, name);
         }
-
         FileOutputStream writer = new FileOutputStream("employee.txt", true);
         ObjectOutputStream obj = new ObjectOutputStream(writer);
         obj.writeObject(firstEmployee);
@@ -440,14 +427,14 @@ public class Payroll{
             String hex1 = Integer.toHexString(0xff & byteDatum);
             encrypted2.append(hex1);
         }
-        if( encrypted1.toString().equals(encrypted2.toString())){
+        if (encrypted1.toString().equals(encrypted2.toString())) {
             return true;
         }
         return false;
     }
 
-//    Check if username already exists in the database.
-    public boolean checkUnique(String username){
+    //    Check if username already exists in the database.
+    public boolean checkUnique(String username) {
         return employees.stream().anyMatch(employee -> employee.getUserName().equals(username));
     }
 }

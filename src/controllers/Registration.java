@@ -131,7 +131,7 @@ public class Registration implements Initializable {
         }
         if (!(fullname.equals("") || sal.equals("") || user.equals("") || type == null)) {
 //            submit.setDisable(false);
-            window.setStage("../UI/menuPage", "employee Menu");
+            window.setStage("../UI/menuPage.fxml", "employee Menu");
         }
     }
 
@@ -160,17 +160,6 @@ public class Registration implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Object ref = new Object() {
-            public EmployeeType payrollType = null;
-
-            public EmployeeType getPayrollType() {
-                return payrollType;
-            }
-
-            public void setPayrollType(EmployeeType payrollType) {
-                this.payrollType = payrollType;
-            }
-        };
         radioGroup = new ToggleGroup();
         radiobutton1.setToggleGroup(radioGroup);
         radiobutton2.setToggleGroup(radioGroup);

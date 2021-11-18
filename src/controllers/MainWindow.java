@@ -12,9 +12,15 @@ import java.io.IOException;
 
 public class MainWindow extends Application {
     private static Stage stage;
+    private static MainWindow window;
 
     public static void main(String[] args) {
         launch(args);
+//        window=this;
+    }
+
+    public static MainWindow getWindow() {
+        return window;
     }
 
     @Override
