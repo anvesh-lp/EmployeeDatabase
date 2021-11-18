@@ -440,7 +440,10 @@ public class Payroll{
             String hex1 = Integer.toHexString(0xff & byteDatum);
             encrypted2.append(hex1);
         }
-        return encrypted1.toString().equals(encrypted2.toString());
+        if( encrypted1.toString().equals(encrypted2.toString())){
+            return true;
+        }
+        return false;
     }
 
 //    Check if username already exists in the database.

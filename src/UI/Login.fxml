@@ -17,9 +17,9 @@
       </Label>
       <Pane layoutX="85.0" layoutY="97.0" prefHeight="276.0" prefWidth="433.0">
          <children>
-            <TextField alignment="CENTER" layoutX="137.0" layoutY="56.0" promptText="Enter User Name" />
-            <PasswordField alignment="CENTER" layoutX="137.0" layoutY="114.0" promptText="Enter Password" />
-            <Button alignment="CENTER" layoutX="167.0" layoutY="194.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Login" />
+            <TextField fx:id="username" alignment="CENTER" layoutX="137.0" layoutY="56.0" promptText="Enter User Name" />
+            <PasswordField fx:id="password" alignment="CENTER" layoutX="137.0" layoutY="114.0" promptText="Enter Password" />
+            <Button fx:id="loginButton" alignment="CENTER" layoutX="167.0" layoutY="194.0" mnemonicParsing="false" onAction="#onSubmitHandler" prefHeight="26.0" prefWidth="100.0" text="Login" />
          </children>
       </Pane>
    </children>

@@ -28,6 +28,10 @@ public abstract class Employee implements Serializable {
         Employee.nextID++;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public static void setNextID(int nextID) {
         Employee.nextID = nextID;
     }
