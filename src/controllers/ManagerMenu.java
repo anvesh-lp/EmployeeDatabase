@@ -34,17 +34,17 @@ public class ManagerMenu implements Initializable {
     @FXML
     private Button updateEmployeeButton;
 
-    private MainWindow window=new MainWindow();
-    private Payroll payroll=Payroll.getPayroll();
+    private MainWindow window = MainWindow.getWindow();
+    private Payroll payroll = Payroll.getPayroll();
 
     @FXML
     void createNewEmployee(ActionEvent event) throws IOException {
-        window.setStage("../UI/Registration.fxml","New Employee");
+        window.setStage("../UI/Registration.fxml", "New Employee");
     }
 
     @FXML
     void logoutHandler(ActionEvent event) throws IOException {
-        window.setStage("../UI/Login.fxml","Login");
+        window.setStage("../UI/Login.fxml", "Login");
     }
 
     @FXML
@@ -64,11 +64,11 @@ public class ManagerMenu implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ArrayList<Employee> employeeArrayList=payroll.getEmployees();
-        if (employeeArrayList.size()==0){
+        ArrayList<Employee> employeeArrayList = payroll.getEmployees();
+        if (employeeArrayList.size() == 0) {
             textAreaField.appendText("No Employees in the Database. Click on add to create new employee");
-        }else {
-            employeeArrayList.forEach(employee -> textAreaField.appendText(employee.toString()));
+        } else {
+            employeeArrayList.forEach(employee -> textAreaField.appendText(employee.getEmpID() == 0 ? employee.toString() + Payroll.GREEN + "\n" : employee.toString() + "\n"));
         }
     }
 }

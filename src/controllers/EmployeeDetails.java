@@ -3,6 +3,7 @@ package controllers;
 import domain.Payroll;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.io.IOException;
@@ -25,9 +26,9 @@ public class EmployeeDetails {
     @FXML
     private Button quitButton;
 
-    private Payroll payroll=Payroll.getPayroll();
+    private Payroll payroll = Payroll.getPayroll();
 
-    private MainWindow window=MainWindow.getWindow();
+    private MainWindow window = MainWindow.getWindow();
 
 
     @FXML
@@ -37,7 +38,7 @@ public class EmployeeDetails {
 
     @FXML
     void onLogoutHandler(ActionEvent event) throws IOException {
-        window.setStage("../UI/Login.fxml","Login");
+        window.setStage("../UI/Login.fxml", "Login");
     }
 
     @FXML
@@ -47,11 +48,13 @@ public class EmployeeDetails {
                 ButtonType.YES, ButtonType.NO);
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.YES){
+        if (result.get() == ButtonType.YES) {
             // ... user chose YES
-            alert.setAlertType(Alert.AlertType.INFORMATION);
-            alert.setContentText("You have been successfully terminated");
-            window.setStage("../Login.fxml","Login");
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION, "You have been successfully terminated");
+            alert1.showAndWait();
+            payroll.terminateEmployee(payroll.getCurrentId());
+            window.setStage("../UI/Login.fxml", "Login");
+//            alert1.close();
         } else {
             alert.close();
         }

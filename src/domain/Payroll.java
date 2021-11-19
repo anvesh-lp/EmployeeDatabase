@@ -304,6 +304,27 @@ public class Payroll {
 
     }
 
+    public void terminateEmployee(int id) throws IOException {
+        if (currentId == id) {
+            Employee emp = employees.stream().filter(employee -> employee.getEmpID() == id).findFirst().orElse(null);
+            if (emp == null) {
+                System.out.println("Employee not found Termination method");
+            } else {
+                if (employees.removeIf(employee -> employee.getEmpID() == id)) {
+                    terminated.add(emp);
+                    updateFile();
+                }
+            }
+        } else {
+            employees.removeIf(employee -> employee.getEmpID() == currentId);
+            terminated.add(currentUser);
+            updateFile();
+            currentUser = null;
+            currentId = -1;
+        }
+        System.out.println("Functionality coming soon");
+    }
+
     private void terminateEmployee() throws IOException {
         if (currentId == 0) {
             System.out.println(" Enter the employee id you wish to terminate ");
@@ -445,17 +466,32 @@ public class Payroll {
     }
 
     public void createNewEmployee(String user, double parseDouble, String fullname, EmployeeType type, String pass1) throws IOException {
-        Employee emp=null;
+        Employee emp = null;
         if (type == EmployeeType.HOURLY) {
             emp = new Hourly(user, parseDouble, fullname);
             emp.setPassword(pass1);
-        } else if (type==EmployeeType.SALARIED){
+        } else if (type == EmployeeType.SALARIED) {
             emp = new Salaried(user, parseDouble, fullname);
             emp.setPassword(pass1);
         }
+        if (emp != null && emp.getEmpID() == 0) {
+            currentId = emp.empID;
+            currentUser = emp;
+        }
+        System.out.println("created employee " + emp.getPassword());
         addToFile(emp);
     }
 
+    public void setCurrentUser(Employee currentUser) {
+        this.currentUser = currentUser;
+    }
 
+    public void setCurrentId(int currentId) {
+        this.currentId = currentId;
+    }
+
+    public Employee getUser(String username) {
+        return employees.stream().filter(employee -> employee.getUserName().equals(username)).findAny().orElse(null);
+    }
 }
 

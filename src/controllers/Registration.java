@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Registration implements Initializable {
 
     private final Payroll payroll = Payroll.getPayroll();
-    private final MainWindow window = new MainWindow();
+    private final MainWindow window =MainWindow.getWindow();
 
 
     @FXML
@@ -127,7 +127,7 @@ public class Registration implements Initializable {
         } else {
             usernameText.setVisible(false);
         }
-        if (!(fullname.equals("") || sal.equals("") || user.equals("") || type == null || pass2.equals("") || pass1.equals(""))) {
+        if (!(fullname.equals("") || sal.equals("") || user.equals("") || type == null || pass2.equals("") || pass1.equals("") || payroll.checkuserNameUnique(user))) {
             domain.Employee emp = null;
 //            submit.setDisable(false);
             payroll.createNewEmployee(user, Double.parseDouble(sal), fullname,type,pass1);

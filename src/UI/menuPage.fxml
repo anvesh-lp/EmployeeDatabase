@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="607.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ManagerMenu">
    <children>
-      <TextArea fx:id="textAreaField" layoutX="18.0" layoutY="215.0" prefHeight="287.0" prefWidth="564.0" scrollTop="100.0" />
+      <TextArea fx:id="textAreaField" editable="false" layoutX="18.0" layoutY="215.0" prefHeight="287.0" prefWidth="564.0" scrollTop="100.0" />
       <Button fx:id="createemployeeButton" alignment="CENTER" layoutX="132.0" layoutY="91.0" mnemonicParsing="false" onAction="#createNewEmployee" prefHeight="26.0" prefWidth="106.0" text="New Employee" />
       <Label alignment="CENTER" layoutX="228.0" layoutY="24.0" prefHeight="17.0" prefWidth="141.0" text="Admin" textAlignment="CENTER">
          <font>

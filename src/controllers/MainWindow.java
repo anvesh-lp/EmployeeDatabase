@@ -20,6 +20,10 @@ public class MainWindow extends Application {
     }
 
     public static MainWindow getWindow() {
+        if (window==null){
+            window=new MainWindow();
+            return window;
+        }
         return window;
     }
 

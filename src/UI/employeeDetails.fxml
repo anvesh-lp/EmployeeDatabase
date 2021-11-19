@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EmployeeDetails">
    <children>
-      <TextArea fx:id="employeeDetailsText" layoutX="18.0" layoutY="158.0" prefHeight="84.0" prefWidth="565.0" />
+      <TextArea fx:id="employeeDetailsText" editable="false" layoutX="18.0" layoutY="158.0" prefHeight="84.0" prefWidth="565.0" />
       <Button fx:id="quitButton" layoutX="489.0" layoutY="344.0" mnemonicParsing="false" onAction="#onQuitHandler" prefHeight="26.0" prefWidth="87.0" text="Quit" />
       <Button fx:id="detailsButton" layoutX="231.0" layoutY="102.0" mnemonicParsing="false" onAction="#OnDetailsHandler" prefHeight="37.0" prefWidth="139.0" text="Get details" />
       <Button fx:id="logoutButton" layoutX="41.0" layoutY="344.0" mnemonicParsing="false" onAction="#onLogoutHandler" prefHeight="26.0" prefWidth="87.0" text="LogOut" />

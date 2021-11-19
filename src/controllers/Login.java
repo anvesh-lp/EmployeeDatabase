@@ -1,5 +1,6 @@
 package controllers;
 
+import domain.Employee;
 import domain.Payroll;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,35 +30,39 @@ public class Login {
     private Text usernamePrompt;
 
     private Payroll payroll = Payroll.getPayroll();
-    private MainWindow window=new MainWindow();
+    private MainWindow window = new MainWindow();
 
     @FXML
     void onSubmitHandler(ActionEvent event) throws NoSuchAlgorithmException, IOException {
-            if (username.getText().equals("")){
-                setVisibe(usernamePrompt,"User name required");
-            }else {
-                usernamePrompt.setVisible(false);
-            }
-            if (password.getText().equals("")){
-                setVisibe(passwordprompt,"Field required");
-            }else {
-                passwordprompt.setVisible(false);
-            }
-            if (Payroll.getNewPassword(password.getText(),payroll.getCurrentUser().getPassword())){
-                if (payroll.getCurrentId()==0) {
-                    window.setStage("../UI/menuPage.fxml","Employee");
-                }else {
-                    window.setStage("../UI/employeeDetails.fxml","EmployeeDetails");
-                }
-            }else {
-                setVisibe(passwordprompt,"Password Incorrect");
-            }
+        Employee emp = null;
+        if (username.getText().equals("")) {
+            setVisibe(usernamePrompt, "User name required");
+        } else {
+            usernamePrompt.setVisible(false);
+            emp = payroll.getUser(username.getText());
         }
+        if (password.getText().equals("")) {
+            setVisibe(passwordprompt, "Field required");
+        } else {
+            passwordprompt.setVisible(false);
+        }
+        if (emp==null){
+            setVisibe(usernamePrompt,"Username Not found ");
+        }
+        if (emp != null && Payroll.getNewPassword(password.getText(), emp.getPassword())) {
+            if (emp.getEmpID() == 0) {
+                window.setStage("../UI/menuPage.fxml", "Employee");
+            } else {
+                payroll.setCurrentId(emp.getEmpID());
+                payroll.setCurrentUser(emp);
+                window.setStage("../UI/employeeDetails.fxml", "EmployeeDetails");
+            }
+        } else {
+            setVisibe(passwordprompt, "Password Incorrect");
+        }
+    }
 
-
-
-
-    public void setVisibe(Text text,String message){
+    public void setVisibe(Text text, String message) {
         text.setVisible(true);
         text.setText(message);
     }
