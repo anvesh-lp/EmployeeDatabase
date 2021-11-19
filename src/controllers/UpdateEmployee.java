@@ -157,7 +157,6 @@ public class UpdateEmployee implements Initializable {
             alert1.showAndWait();
             window.setStage("../UI/menuPage.fxml", "Boss Menu");
         }
-
     }
 
     @FXML

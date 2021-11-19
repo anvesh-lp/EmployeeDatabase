@@ -48,8 +48,8 @@ public class ManagerMenu implements Initializable {
     }
 
     @FXML
-    void runPayroll(ActionEvent event) {
-
+    void runPayroll(ActionEvent event) throws IOException {
+        window.setStage("../UI/payrollEmployee.fxml","Payroll");
     }
 
     @FXML

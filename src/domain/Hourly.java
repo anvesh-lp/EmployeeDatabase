@@ -3,15 +3,21 @@ package domain;
 import java.util.Scanner;
 
 public class Hourly extends Employee{
+    private int hours;
     public Hourly(String userName, double baseSalary, String empName) {
         super(userName, baseSalary, empName);
     }
 
     @Override
     public double getPay() {
-        System.out.println("Enter the number of hours for this pay period (Half of the month)  for employee "+this.empName);
-        Scanner anv= new Scanner(System.in);
-        int hours=anv.nextInt();
         return baseSalary*hours;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
     }
 }

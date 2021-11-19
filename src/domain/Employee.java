@@ -11,10 +11,19 @@ public abstract class Employee implements Serializable {
     protected String startDate;
     protected String empName;
     protected String password;
+    protected int extraHours=0;
 
     private static int nextID = 0;
 
     private static final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+    public int getExtraHours() {
+        return extraHours;
+    }
+
+    public void setExtraHours(int extraHours) {
+        this.extraHours = extraHours;
+    }
 
     // domain.Employee constructor
     public Employee(String userName, double baseSalary, String empName) {

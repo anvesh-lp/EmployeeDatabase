@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Registration implements Initializable {
 
     private final Payroll payroll = Payroll.getPayroll();
-    private final MainWindow window =MainWindow.getWindow();
+    private final MainWindow window = MainWindow.getWindow();
 
 
     @FXML
@@ -36,6 +36,18 @@ public class Registration implements Initializable {
 
     @FXML
     private PasswordField password1;
+
+    @FXML
+    private CheckBox hourscheckBox;
+
+    @FXML
+    private TextField hoursTextField;
+
+    @FXML
+    private Text errorPromptCheckbox;
+
+    @FXML
+    private TextField hTextField;
 
     @FXML
     private PasswordField password2;
@@ -76,8 +88,31 @@ public class Registration implements Initializable {
     }
 
     public void setUpToggleButtons() {
+    }
 
+    @FXML
+    void onHourlySelected(ActionEvent event) {
+        if (radiobutton2.isSelected()){
+            hTextField.setVisible(true);
+        }else {
+            hTextField.setVisible(false);
+        }
+    }
+    @FXML
+    void onSalarySelected(ActionEvent event) {
 
+            hTextField.setVisible(false);
+
+    }
+
+    @FXML
+    void onChecking(ActionEvent event) {
+        if (hourscheckBox.isSelected()) {
+            hoursTextField.setVisible(true);
+        } else {
+            hoursTextField.setVisible(false);
+            errorPromptCheckbox.setVisible(false);
+        }
     }
 
     @FXML
@@ -127,10 +162,41 @@ public class Registration implements Initializable {
         } else {
             usernameText.setVisible(false);
         }
+        int hours = 0;
+        if (hourscheckBox.isSelected()) {
+            if (hoursTextField.getText().equals("")) {
+                setVisibiity(errorPromptCheckbox, "Value required");
+                return;
+            } else {
+                errorPromptCheckbox.setVisible(false);
+            }
+            try {
+                hours = Integer.parseInt(hoursTextField.getText());
+            } catch (NumberFormatException e) {
+                errorPromptCheckbox.setVisible(true);
+                setVisibiity(errorPromptCheckbox, "Invalid input");
+                return;
+            }
+        }
+        int mainHours=0;
+        if (radiobutton2.isSelected()){
+            if (hTextField.getText().equals("")) {
+                setVisibiity(radioButtonText, "Value required");
+                return;
+            } else {
+                radioButtonText.setVisible(false);
+            }
+            try {
+                mainHours = Integer.parseInt(hoursTextField.getText());
+            } catch (NumberFormatException e) {
+                radioButtonText.setVisible(true);
+                setVisibiity(radioButtonText, "Invalid input");
+                return;
+            }
+        }
         if (!(fullname.equals("") || sal.equals("") || user.equals("") || type == null || pass2.equals("") || pass1.equals("") || payroll.checkuserNameUnique(user))) {
-            domain.Employee emp = null;
-//            submit.setDisable(false);
-            payroll.createNewEmployee(user, Double.parseDouble(sal), fullname,type,pass1);
+            Employee emp = null;
+            payroll.createNewEmployee(user, Double.parseDouble(sal), fullname, type, pass1, hours,mainHours);
             window.setStage("../UI/menuPage.fxml", "employee Menu");
         }
     }

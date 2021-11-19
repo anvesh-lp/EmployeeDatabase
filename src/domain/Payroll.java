@@ -244,6 +244,44 @@ public class Payroll {
     /**
      * method to be implemented
      */
+    public String runPayroll(){
+        StringBuilder s = new StringBuilder();
+        for (Employee emp : employees) {
+            if (emp.getEmpID() == 0) {
+                continue;
+            }
+            double pay = emp.getPay();
+            double updated = 0;
+                int hours=emp.getExtraHours();
+            System.out.println(hours);
+                if (emp instanceof Hourly) {
+                    updated = hours * emp.getBaseSalary() * 1.5;
+                    pay += updated;
+                } else {
+                    if (hours >= 100) {
+                        updated = (10 * pay) / 100;
+                        pay += updated;
+                    }
+            }
+            s.append(String.format("%.2f (overtime Hours %s)", pay, hours)).append(String.format("\t\t%05d", emp.getEmpID())).append(String.format("\t\t%s", emp.getEmpName()));
+            s.append("\n");
+        }
+        String sp = "domain.Payroll Report  \t\t" + new Date();
+        String so = "Pay" + "\t\t" + "ID" + "\t\t" + "Name";
+        System.out.println(sp);
+        System.out.println(so);
+        if (writer != null) {
+            writer.write(sp);
+            writer.write("\n");
+            writer.write(so);
+            writer.write("\n");
+            writer.write(String.valueOf(s));
+            writer.flush();
+            writer.close();
+        }
+        return s.toString();
+    }
+
     private void payEmployee() {
 //        System.out.println("Functionality coming soon");
         Scanner anv = new Scanner(System.in);
@@ -300,8 +338,6 @@ public class Payroll {
             writer.close();
         }
         System.out.println(s);
-
-
     }
 
     public void terminateEmployee(int id) throws IOException {
@@ -469,11 +505,14 @@ public class Payroll {
         return employees.stream().anyMatch(employee -> employee.getUserName().equals(username));
     }
 
-    public void createNewEmployee(String user, double parseDouble, String fullname, EmployeeType type, String pass1) throws IOException {
+    public void createNewEmployee(String user, double parseDouble, String fullname, EmployeeType type, String pass1,int hours,int mainHours) throws IOException {
         Employee emp = null;
         if (type == EmployeeType.HOURLY) {
             emp = new Hourly(user, parseDouble, fullname);
             emp.setPassword(pass1);
+            Hourly h=(Hourly)emp;
+            h.setHours(mainHours);
+//            emp=h;
         } else if (type == EmployeeType.SALARIED) {
             emp = new Salaried(user, parseDouble, fullname);
             emp.setPassword(pass1);
@@ -482,7 +521,9 @@ public class Payroll {
             currentId = emp.empID;
             currentUser = emp;
         }
-        System.out.println("created employee " + emp.getPassword());
+        if (emp!=null){
+            emp.setExtraHours(hours);
+        }
         addToFile(emp);
     }
 
