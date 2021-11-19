@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -45,7 +46,7 @@ public class UpdateEmployee implements Initializable {
     private Button submitButton;
 
     @FXML
-    private Button terminateButton;
+    private Button updateButton;
 
     @FXML
     private TextField usernameInput;
@@ -57,13 +58,16 @@ public class UpdateEmployee implements Initializable {
     private MainWindow window=MainWindow.getWindow();
 
     @FXML
-    void onCancel(ActionEvent event) {
-
-
+    void onCancel(ActionEvent event) throws IOException {
+        window.setStage("../UI/menuPage.fxml","Boss Window");
     }
 
     public boolean validateInput(String num) {
         int intValue;
+        num=num.split("[.]")[0];
+        if (num==null){
+            return false;
+        }
         try {
             intValue = Integer.parseInt(num);
             return true;
@@ -89,13 +93,9 @@ public class UpdateEmployee implements Initializable {
 
     @FXML
     void onSubmit(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onTerminate(ActionEvent event) {
         Employee employee=null;
         showVisible(false);
+        submitButton.setVisible(true);
         String input=searchField.getText();
         if (input.equals("")){
             setVisibiity(errorprompt,"Enter a Value");
@@ -110,27 +110,54 @@ public class UpdateEmployee implements Initializable {
                 if (employee==null){
                     setVisibiity(errorprompt,"Employeee not found");
                 }else {
+                    showVisible(true);
                     usernameInput.setText(employee.getEmpName());
-                    salaryInput.setText(""+employee.getBaseSalary());
+                    System.out.println((""+employee.getBaseSalary()).split("[.]")[0]);
+                    salaryInput.setText((""+employee.getBaseSalary()).split("[.]")[0]);
                     errorprompt.setVisible(false);
                 }
             }
-            return;
+//            return;
         }
         if (type==EmployeeType.HOURLY){
             employee= payroll.getUser(input);
             if (employee==null){
                 setVisibiity(errorprompt,"Employeee not found");
             }else {
+                showVisible(true);
                 usernameInput.setText(employee.getEmpName());
-                salaryInput.setText(""+employee.getBaseSalary());
+                salaryInput.setText((""+employee.getBaseSalary()).split("[.]")[0]);
                 errorprompt.setVisible(false);
             }
         }
         if (employee!=null){
-            terminateButton.setVisible(true);
+            updateButton.setVisible(true);
             foundEmployee=employee;
         }
+    }
+
+    @FXML
+    void onUpdate(ActionEvent event) throws IOException {
+        String userName=usernameInput.getText();
+        String salary=salaryInput.getText();
+        if (userName.equals("")){
+            setVisibiity(errorprompt,"Username is required");
+            return;
+        }
+        if (salary.equals("")){
+            setVisibiity(errorprompt,"Salary is required");
+            return;
+        }else if (!validateInput(salary)){
+            setVisibiity(errorprompt,"Invalid input");
+            return;
+        }
+        if (validateInput(salary)){
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION, "Employee details Successfully updated");
+            payroll.updateEmployee(foundEmployee.getUserName(),userName,Double.parseDouble(salary));
+            alert1.showAndWait();
+            window.setStage("../UI/menuPage.fxml", "Boss Menu");
+        }
+
     }
 
     @FXML
@@ -165,6 +192,6 @@ public class UpdateEmployee implements Initializable {
         salaryLabel.setVisible(choise);
         salaryInput.setVisible(choise);
         usernameInput.setVisible(choise);
-        submitButton.setVisible(choise);
+        updateButton.setVisible(choise);
     }
 }

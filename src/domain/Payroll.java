@@ -344,6 +344,18 @@ public class Payroll {
         System.out.println("Functionality coming soon");
     }
 
+    public void updateEmployee(String  username,String updateName,double updatedSalary) throws IOException {
+        Employee emp = employees.stream().filter(employee -> employee.getUserName().equals(username)).findFirst().orElse(null);
+        if (emp == null) {
+            System.out.println(YELLOW + "domain.Employee you are looking for is not in the database" + RESET);
+        } else {
+            emp.setBaseSalary(updatedSalary);
+            emp.setEmpName(updateName);
+            System.out.println("domain.Employee after updating the details \n " + emp);
+            updateFile();
+        }
+    }
+
     private void updateEmployee() throws IOException {
         if (currentId == 0) {
             System.out.println("Enter the loginname of the employee you want to edit ");

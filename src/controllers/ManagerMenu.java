@@ -58,7 +58,8 @@ public class ManagerMenu implements Initializable {
     }
 
     @FXML
-    void updateEmployee(ActionEvent event) {
+    void updateEmployee(ActionEvent event) throws IOException {
+        window.setStage("../UI/updateEmployee.fxml","Update Employee");
 
     }
 
