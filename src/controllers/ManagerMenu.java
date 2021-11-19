@@ -53,8 +53,8 @@ public class ManagerMenu implements Initializable {
     }
 
     @FXML
-    void terminateEmployee(ActionEvent event) {
-
+    void terminateEmployee(ActionEvent event) throws IOException {
+        window.setStage("../UI/employeeTermination.fxml","Terminate employee");
     }
 
     @FXML

@@ -35,8 +35,6 @@ public class MainWindow extends Application {
         stage.setTitle("Main Window");
         stage.show();
         Payroll payroll=new Payroll();
-//        MainWindowController controller=new MainWindowController();
-//        controller.enterButton(new ActionEvent());
     }
 
 
@@ -45,11 +43,10 @@ public class MainWindow extends Application {
         if (stage.getScene()!=null){
             stage.setScene(new Scene(root));
             stage.setTitle(title);
-            stage.show();
         }else {
             stage.setScene(new Scene(root, 700, 600));
             stage.setTitle("Employee Database");
-            stage.show();
         }
+        stage.show();
     }
 }

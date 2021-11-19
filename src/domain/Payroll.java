@@ -305,7 +305,7 @@ public class Payroll {
     }
 
     public void terminateEmployee(int id) throws IOException {
-        if (currentId == id) {
+//        if (currentId == id) {
             Employee emp = employees.stream().filter(employee -> employee.getEmpID() == id).findFirst().orElse(null);
             if (emp == null) {
                 System.out.println("Employee not found Termination method");
@@ -315,15 +315,8 @@ public class Payroll {
                     updateFile();
                 }
             }
-        } else {
-            employees.removeIf(employee -> employee.getEmpID() == currentId);
-            terminated.add(currentUser);
-            updateFile();
-            currentUser = null;
-            currentId = -1;
         }
-        System.out.println("Functionality coming soon");
-    }
+
 
     private void terminateEmployee() throws IOException {
         if (currentId == 0) {
@@ -340,7 +333,6 @@ public class Payroll {
                     System.out.println(GREEN + "domain.Employee has been successfully terminated" + RESET);
                 }
             }
-
         } else {
             employees.removeIf(employee -> employee.getEmpID() == currentId);
             terminated.add(currentUser);
@@ -492,6 +484,9 @@ public class Payroll {
 
     public Employee getUser(String username) {
         return employees.stream().filter(employee -> employee.getUserName().equals(username)).findAny().orElse(null);
+    }
+    public Employee getUser(int id) {
+        return employees.stream().filter(employee -> employee.getEmpID()==id).findAny().orElse(null);
     }
 }
 
