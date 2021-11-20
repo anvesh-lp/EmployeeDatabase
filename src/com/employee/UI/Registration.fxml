@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.*?>
+<Pane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="693.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/17"
+      fx:controller="com.employee.controllers.Registration">
+    <children>
+        <Label alignment="CENTER" layoutX="136.0" layoutY="46.0" prefHeight="17.0" prefWidth="328.0" text="New Employee"
+               textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font size="27.0"/>
+            </font>
+        </Label>
+        <Label alignment="CENTER" layoutX="107.0" layoutY="135.0" prefHeight="17.0" prefWidth="107.0" text="Name"
+               textAlignment="CENTER"/>
+        <Label alignment="CENTER" layoutX="107.0" layoutY="182.0" prefHeight="17.0" prefWidth="107.0" text="User Name"
+               textAlignment="CENTER"/>
+        <Label alignment="CENTER" layoutX="107.0" layoutY="232.0" prefHeight="17.0" prefWidth="107.0" text="Salary"
+               textAlignment="CENTER"/>
+        <TextField fx:id="name" layoutX="287.0" layoutY="131.0" promptText="Enter Employee full name"/>
+        <TextField fx:id="username" layoutX="287.0" layoutY="178.0" onMouseClicked="#clicked"
+                   onMouseExited="#checkUnique" promptText="Enter User name"/>
+        <TextField fx:id="salary" layoutX="287.0" layoutY="228.0" onMouseExited="#checkSalary"
+                   promptText="Enter Salary"/>
+        <Label alignment="CENTER" layoutX="107.0" layoutY="292.0" prefHeight="17.0" prefWidth="107.0" text="Password"
+               textAlignment="CENTER"/>
+        <PasswordField fx:id="password1" layoutX="287.0" layoutY="288.0" promptText="password"/>
+        <PasswordField fx:id="password2" layoutX="287.0" layoutY="340.0" promptText="password"/>
+        <Label alignment="CENTER" layoutX="107.0" layoutY="345.0" prefHeight="17.0" prefWidth="107.0" text="Re-Enter"
+               textAlignment="CENTER"/>
+        <RadioButton fx:id="radiobutton1" layoutX="287.0" layoutY="412.0" mnemonicParsing="false"
+                     onAction="#onSalarySelected" text="Salaried"/>
+        <RadioButton fx:id="radiobutton2" layoutX="387.0" layoutY="412.0" mnemonicParsing="false"
+                     onAction="#onHourlySelected" text="Hourly"/>
+        <Text fx:id="usernameText" fill="#f23030" layoutX="475.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              wrappingWidth="81.95751953125"/>
+        <Text fx:id="salaryText" fill="#d32b2b" layoutX="475.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              wrappingWidth="81.95751953125"/>
+        <Text fx:id="passwordText" fill="#e81515" layoutX="287.0" layoutY="393.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Passwords Do not match or incorrect" visible="false" wrappingWidth="159.1171875"/>
+        <Button fx:id="submit" alignment="CENTER" layoutX="272.0" layoutY="550.0" mnemonicParsing="false"
+                onAction="#onSubmit" text="Submit" textAlignment="CENTER"/>
+        <Text fx:id="usernameText1" fill="#f23030" layoutX="485.0" layoutY="206.0" strokeType="OUTSIDE"
+              strokeWidth="0.0" wrappingWidth="81.95751953125"/>
+        <Text fx:id="usernameText2" fill="#f23030" layoutX="475.0" layoutY="195.0" strokeType="OUTSIDE"
+              strokeWidth="0.0" wrappingWidth="81.95751953125"/>
+        <Text fx:id="fullnameText" fill="#eb1d1d" layoutX="475.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              wrappingWidth="81.95751953125"/>
+        <Text fx:id="radioButtonText" fill="#f23030" layoutX="354.0" layoutY="458.0" strokeType="OUTSIDE"
+              strokeWidth="0.0" wrappingWidth="81.95751953125"/>
+        <CheckBox fx:id="hourscheckBox" layoutX="288.0" layoutY="475.0" mnemonicParsing="false" onAction="#onChecking"
+                  prefHeight="18.0" prefWidth="101.0" text="Extra hours"/>
+        <TextField fx:id="hoursTextField" layoutX="395.0" layoutY="471.0" promptText="Enter extra hours"
+                   visible="false"/>
+        <Text fx:id="errorPromptCheckbox" fill="#ff5151" layoutX="398.0" layoutY="522.0" strokeType="OUTSIDE"
+              strokeWidth="0.0" wrappingWidth="141.0"/>
+        <TextField fx:id="hTextField" layoutX="476.0" layoutY="408.0" prefHeight="26.0" prefWidth="126.0"
+                   promptText="Enter hours" visible="false"/>
+    </children>
+</Pane>
